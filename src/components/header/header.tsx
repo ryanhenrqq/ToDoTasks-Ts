@@ -3,6 +3,7 @@ import './header.css'
 import type { NoteUpdaterHeaderProp } from '../../types/types'
 import { CreateTask } from '../creator/notecreator'
 
+import logo from '/task.svg'
 import addIcon from '../../assets/more.svg'
 import clearIcon from '../../assets/clear.png'
 
@@ -19,7 +20,7 @@ export function Header({note, onChange}: NoteUpdaterHeaderProp) {
     <>
       <header>
           <div className="left-side">
-            <img src='/task.svg' alt="Tarefas" />
+            <img src={logo} alt="Logo" />
             <h1>To-Do Tasks</h1>
           </div>
           <div className="right-side">
