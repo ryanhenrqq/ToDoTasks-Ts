@@ -1,0 +1,96 @@
+/* CREATE VIEW (POPUP TO CRATE TASK) */
+
+.create-pop {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff6cd;
+    border: solid 1px black;
+    border-radius: 24px;
+    width: 420px;
+    position: absolute;
+    padding: 2rem;
+    top: 10%;
+    right: 2%;
+}
+.create-pop-date {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff6cd;
+    border: solid 1px black;
+    border-radius: 24px;
+    width: 420px;
+    position: absolute;
+    padding: 2rem;
+    top: 10%;
+    right: 2%;
+}
+.create-pop b {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+.create-pop p {
+    font-size: 18px;
+}
+#title-set, #date-set, #time-set {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border-radius: 18px;
+    height: 100%;
+}
+#desc-set {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border-radius: 18px;
+    height: 6rem;
+    resize: none;
+}
+.pup-buttons {
+    border: none;
+    border-radius: 24px;
+    font-size: 22px;
+    padding: 12px;
+    margin-top: 12px;
+    width: 100%;
+    transition: transform 0.15s linear;
+}
+.pup-buttons:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.pup-title {
+    margin-bottom: 12px;
+}
+.flex-hor {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+.list-flex-hor {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: start;
+    align-items: start;
+    margin-bottom: 12px;
+    width: 100%;
+}
+#close-new-popup {
+    width: 90%;
+    height: 50%;
+    font-weight: bolder;
+    border-radius: 18px;
+}
+#save-changes-new-popup {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
