@@ -25,20 +25,24 @@ function App() {
   };
   return (
     <>
-      <Header onChange={updateNotes} />
+      <Header note={noteList} onChange={updateNotes} />
       {noteList.length == 0 ? <CleanView /> : <TasksView note={noteList} onChangeNotes={updateNotes} />}
     </>
   )
 }
 
 interface NoteUpdaterHeaderProp{
+  note: Note[]
   onChange: (newNote: Note[]) => void
 }
-function Header({onChange}: NoteUpdaterHeaderProp) {
+function Header({note, onChange}: NoteUpdaterHeaderProp) {
   const [createView, setCreateView] = useState<boolean>(false)
 
   const handleCreateView = () => {
     !createView ? setCreateView(true) : setCreateView(false)
+  }
+  const handleDeleteAll = () => {
+    onChange([])
   }
   return (
     <>
@@ -51,7 +55,10 @@ function Header({onChange}: NoteUpdaterHeaderProp) {
             <button><img src={addIcon} alt="Adicionar" id="popup-add-note" onClick={handleCreateView}
             style={createView ? { transform: 'rotate(45deg)'} : { transform: 'rotate(0deg)'}}
             /></button>
-            <button><img src={clearIcon} alt="Limpar Lista" id="clear-all" /></button>
+            {note.length>0 &&
+              <button><img src={clearIcon} alt="Limpar Lista" id="clear-all" onClick={handleDeleteAll} /></button>
+            }
+            
           </div>
       </header>
       {createView ? <CreateTask onChange={onChange} /> : null}
