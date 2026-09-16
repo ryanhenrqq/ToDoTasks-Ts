@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import addIcon from './assets/more.svg'
 import clearIcon from './assets/clear.png'
@@ -30,7 +30,9 @@ function Header() {
             <h1>To-Do Tasks</h1>
           </div>
           <div className="right-side">
-            <button><img src={addIcon} alt="Adicionar" id="popup-add-note" onClick={handleCreateView} /></button>
+            <button><img src={addIcon} alt="Adicionar" id="popup-add-note" onClick={handleCreateView}
+            style={createView ? { transform: 'rotate(45deg)'} : { transform: 'rotate(0deg)'}}
+            /></button>
             <button><img src={clearIcon} alt="Limpar Lista" id="clear-all" /></button>
           </div>
       </header>
@@ -71,13 +73,22 @@ function CreateTask() {
 
     return () => clearTimeout(countdown)
   }, [errorView])
+  
+  const [noteTitle, setNoteTitle] = useState('')
+  const [noteDesc, setNoteDesc] = useState('')
+  const [noteDate, setNoteDate] = useState('')
+  const [noteTime, setNoteTime] = useState('')
+  const handleCreate = () => {
+    console.log(noteTitle, noteDesc, noteDate, noteTime)
+    handleShowError() // temporario apenas pra nao dar erro
+
+    // TRATAMENTO PRO LOCAL STORAGE > EXIBIÇÃO PRO USUARIO AO ATUALIZAR - PROXIMO PASSO
+  }
   return (
     <>
       <div className="create-pop" id="create-pop">
           <div className="flex-hor pup-title" id="normal-title-popup-div">
               <b>Criar nova Tarefa</b>
-              <button id="close-new-popup" disabled>Cancelar</button>
-              {/* Plano - Integrar esse botao de cancelar ao header */}
           </div>
           <div className="list-flex-hor" id="save-changes-new-popup" style={{ display: 'none'}}>
               <b>Descartar?</b>
@@ -87,26 +98,31 @@ function CreateTask() {
           {errorView ? <NotFunctionalFeature /> : null}
           <div className="list-flex-hor">
               <p>Titulo</p>
-              <input type="text" id="title-set" />
+              <input type="text" id="title-set"
+                value={noteTitle} onChange={(e) => setNoteTitle(e.target.value)} />
           </div>
           <div className="list-flex-hor">
               <p>Descrição</p>
-              <textarea id="desc-set"></textarea>
+              <textarea id="desc-set" value={noteDesc} onChange={(e) => setNoteDesc(e.target.value)}></textarea>
           </div>
           <div className="list-flex-hor">
               <p>Data</p>
-              <input type="date" name="date-set" id="date-set" />
+              <input type="date" name="date-set" id="date-set" value={noteDate} onChange={(e) => setNoteDate(e.target.value)} />
           </div>
           <p><input type="checkbox" name="activate-time" id="activate-time" onChange={handleTimeView} />Horario</p>
-          {timeView ? <TimeViewCreateTask /> : null}
-          <button id="button-set" className="pup-buttons" onClick={handleShowError}>Criar</button>
+          {timeView ? <TimeViewCreateTask value={noteTime} onChange={(e) => setNoteTime(e.target.value)} /> : null}
+          <button id="button-set" className="pup-buttons" onClick={handleCreate}>Criar</button>
       </div>
     </>
   )
 }
 
-function TimeViewCreateTask() {
-  return <input type="time" name="time-set" id="time-set" />
+interface NoteTimeProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+function TimeViewCreateTask({value, onChange}: NoteTimeProps) {
+  return <input type="time" name="time-set" id="time-set" value={value} onChange={onChange} />
 }
 function NotFunctionalFeature() {
   return <span style={{ color: 'red' }}>Sinto muito, esta função está desabilitada agora!</span>
