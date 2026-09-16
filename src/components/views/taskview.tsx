@@ -47,7 +47,7 @@ function TaskCard({title, description, date, hour, onDelete}: TaskCardsProps) {
                 <b>{date}</b>
                 <i>{hour}</i>
             </div>
-            <img src={timerIcon} className="timer-ch-note" alt="Temporizador" />
+            <img src={timerIcon} className="timer-ch-note" alt="Temporizador" style={{display:'none'}} />
             <img src={trashIcon} alt="Lixeira" className="trash-ind-note" onClick={onDelete} />
         </div>
       </div>
