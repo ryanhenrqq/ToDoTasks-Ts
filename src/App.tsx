@@ -2,21 +2,39 @@ import React, { useEffect, useState } from 'react'
 
 import addIcon from './assets/more.svg'
 import clearIcon from './assets/clear.png'
+import hourglassIcon from './assets/hourglass.svg'
+import monthIcon from './assets/month.svg'
+import timerIcon from './assets/timer.svg'
+import trashIcon from './assets/trash.svg'
 
 import doneIcon from './assets/ok-symbol.svg'
 
 import './App.css'
 
 function App() {
+  const [noteList, setNoteList] = useState<Note[]>([])
+  useEffect(() => {
+    const checker = JSON.parse(localStorage.getItem('notes-storage') ?? '[]');
+    setNoteList(checker)
+  }, []);
+  const updateNotes = (newNotes: Note[]) => {
+    console.log(newNotes)
+    console.log(noteList)
+    setNoteList(newNotes);
+    localStorage.setItem('notes-storage', JSON.stringify(newNotes));
+  };
   return (
     <>
-      <Header />
-      <CleanView />
+      <Header onChange={updateNotes} />
+      {noteList.length == 0 ? <CleanView /> : <TasksView note={noteList} onChangeNotes={updateNotes} />}
     </>
   )
 }
 
-function Header() {
+interface NoteUpdaterHeaderProp{
+  onChange: (newNote: Note[]) => void
+}
+function Header({onChange}: NoteUpdaterHeaderProp) {
   const [createView, setCreateView] = useState<boolean>(false)
 
   const handleCreateView = () => {
@@ -36,7 +54,7 @@ function Header() {
             <button><img src={clearIcon} alt="Limpar Lista" id="clear-all" /></button>
           </div>
       </header>
-      {createView ? <CreateTask /> : null}
+      {createView ? <CreateTask onChange={onChange} /> : null}
     </>
   )
 }
@@ -53,36 +71,114 @@ function CleanView() {
   )
 }
 
-function CreateTask() {
+interface TaskViewProps{
+  note: Note[],
+  onChangeNotes: (newNotes: Note[]) => void
+}
+function TasksView({note, onChangeNotes}: TaskViewProps) {
+  const handleDeleteSingleNote = (excludeId: string) => {
+    const upList = note.filter((notes) => notes.id !== excludeId)
+    onChangeNotes(upList)
+    localStorage.setItem('notes-storage', JSON.stringify(upList))
+  }
+  return (
+    <>
+      <main className="tasker-listing" id="tasker-listing">
+          <div className="today-list pad-hor" id="today-list">
+            <div className="title-list"><img src={hourglassIcon} alt="Ampulheta" />Para Hoje</div>
+            {note.map((note) => (
+              <div key={note.id}>
+                <TaskCard title={note.noteTitle}
+                    description={note.noteDesc}
+                    date={note.noteDate}
+                    hour={note.noteTime}
+                    onDelete={() => handleDeleteSingleNote(note.id)}              
+                    />
+                </div>
+            ))}
+          </div>
+          <div className="tomorrow-list pad-hor" id="tomorrow-list">
+            <div className="title-list"><img src={hourglassIcon} alt="Ampulheta" />Amanhã</div>
+          </div>
+          <div className="weekly-list pad-hor" id="weekly-list">
+            <div className="title-list"><img src={monthIcon} alt="Ampulheta" />Esta Semana</div>
+          </div>
+          <div className="alltime-list pad-hor" id="alltime-list">
+            <div className="title-list"><img src={monthIcon} alt="Ampulheta" />Todo o Tempo</div>
+          </div>
+      </main>
+    </>
+  )
+}
+
+interface Note{
+  id: string,
+  noteTitle: string,
+  noteDesc:string,
+  noteDate:string,
+  noteTime:string
+}
+interface TaskCardsProps {
+  title: string,
+  description: string,
+  date: string,
+  hour: string
+  onDelete: () => void
+}
+function TaskCard({title, description, date, hour, onDelete}: TaskCardsProps) {
+  return(
+    <>
+      <div className="task-object">         
+        <div className="left-side-tsk-obj">
+            <b className="three-dotter-set">{title}</b>
+            <i className="three-dotter-set">{description}</i>
+        </div>
+        <div className="right-side-tsk-obj">
+            <div className="rsto-txt">
+                <b>{date}</b>
+                <i>{hour}</i>
+            </div>
+            <img src={timerIcon} className="timer-ch-note" alt="Temporizador" />
+            <img src={trashIcon} alt="Lixeira" className="trash-ind-note" onClick={onDelete} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+interface NoteCreatorProps{
+  onChange: (newNote: Note[]) => void
+}
+function CreateTask({onChange}: NoteCreatorProps) {
   // Handler pra definir o horario, se assim preferir o usuario
   const [timeView, setTimeView] = useState<boolean>(false)
   const handleTimeView = () => {
     !timeView ? setTimeView(true) : setTimeView(false)
   }
-  // Apenas temporario enquanto o programa não esta funcional
-  const [errorView, setErrorView] = useState<boolean>(false)
-  const handleShowError = () => {
-    setErrorView(true)
-  }
-  useEffect(() => {
-    if (!errorView) return
-
-    const countdown = setTimeout(() => {
-      setErrorView(false)
-    }, 3000)
-
-    return () => clearTimeout(countdown)
-  }, [errorView])
-  
   const [noteTitle, setNoteTitle] = useState('')
   const [noteDesc, setNoteDesc] = useState('')
   const [noteDate, setNoteDate] = useState('')
   const [noteTime, setNoteTime] = useState('')
   const handleCreate = () => {
-    console.log(noteTitle, noteDesc, noteDate, noteTime)
-    handleShowError() // temporario apenas pra nao dar erro
+    console.log(noteTitle, noteDesc, noteDate, noteTime, Date.now())
 
-    // TRATAMENTO PRO LOCAL STORAGE > EXIBIÇÃO PRO USUARIO AO ATUALIZAR - PROXIMO PASSO
+    const newNote: Note = {
+      id: String(Date.now()),
+      noteTitle,
+      noteDesc,
+      noteDate,
+      noteTime
+    }
+    const savedNotes = localStorage.getItem('notes-storage')
+    const noteList: Note[] = savedNotes ? JSON.parse(savedNotes) : []
+    const listUpdater = [...noteList, newNote]
+    console.log(listUpdater)
+    localStorage.setItem('notes-storage', JSON.stringify(listUpdater))
+    setNoteTitle('')
+    setNoteDesc('')
+    setNoteDate('')
+    setNoteTime('')
+    onChange([...noteList, newNote])
   }
   return (
     <>
@@ -95,7 +191,6 @@ function CreateTask() {
               <button id="save-option-yes" className="pup-buttons">Sim</button>
               <button id="save-option-no" className="pup-buttons">Não</button>
           </div>
-          {errorView ? <NotFunctionalFeature /> : null}
           <div className="list-flex-hor">
               <p>Titulo</p>
               <input type="text" id="title-set"
@@ -123,9 +218,6 @@ interface NoteTimeProps {
 }
 function TimeViewCreateTask({value, onChange}: NoteTimeProps) {
   return <input type="time" name="time-set" id="time-set" value={value} onChange={onChange} />
-}
-function NotFunctionalFeature() {
-  return <span style={{ color: 'red' }}>Sinto muito, esta função está desabilitada agora!</span>
 }
 
 export default App
