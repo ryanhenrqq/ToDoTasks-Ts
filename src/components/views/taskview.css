@@ -81,6 +81,8 @@
 .right-side-tsk-obj {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .left-side-tsk-obj b {
     font-size: 24px;
@@ -125,5 +127,15 @@
     }
     .left-side-tsk-obj i{
         font-size: 13px;
+    }
+    .rsto-txt b{
+        font-size: 13px;
+    }
+    .rsto-txt i{
+        font-size: 13px;
+    }
+    .right-side-tsk-obj img{
+        width: 28px;
+        height: 28px;
     }
 }
