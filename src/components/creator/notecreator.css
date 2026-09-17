@@ -94,3 +94,21 @@
     justify-content: center;
     align-items: center;
 }
+
+@media (max-width: 768px) {
+    .create-pop {
+        width: 240px;
+    }
+    .pup-title b{
+        font-size: 24px;
+    }
+    .list-flex-hor {
+        flex-direction: column;
+    }
+    .list-flex-hor p{
+        font-size: 18px;
+    }
+    #save-changes-new-popup {
+        flex-direction: column;
+    }
+}
