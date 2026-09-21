@@ -19,7 +19,7 @@ export function TasksView({note, onChangeNotes}: TaskViewProps) {
           <div className="today-list pad-hor" id="today-list">
             <div className="title-list"><img src={hourglassIcon} alt="Ampulheta" />Proximas Tarefas</div>
             {note.map((note) => (
-              <div key={note.id}>
+              <div key={note.id} className="task-object">
                 <TaskCard title={note.noteTitle}
                     description={note.noteDesc}
                     date={note.noteDate}
@@ -36,8 +36,7 @@ export function TasksView({note, onChangeNotes}: TaskViewProps) {
 
 function TaskCard({title, description, date, hour, onDelete}: TaskCardsProps) {
   return(
-    <>
-      <div className="task-object">         
+    <>    
         <div className="left-side-tsk-obj">
             <b className="three-dotter-set">{title}</b>
             <i className="three-dotter-set">{description}</i>
@@ -50,7 +49,6 @@ function TaskCard({title, description, date, hour, onDelete}: TaskCardsProps) {
             <img src={timerIcon} className="timer-ch-note" alt="Temporizador" style={{display:'none'}} />
             <img src={trashIcon} alt="Lixeira" className="trash-ind-note" onClick={onDelete} />
         </div>
-      </div>
     </>
   )
 }

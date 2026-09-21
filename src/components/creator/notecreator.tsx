@@ -25,6 +25,10 @@ export function CreateTask({onChange}: NoteCreatorProps) {
   const [noteTime, setNoteTime] = useState('')
   const handleCreate = () => {
     console.log(noteTitle, noteDesc, noteDate, noteTime, Date.now())
+    if (noteTitle==""&&noteDesc==""){
+      console.log("Nenhuma nota adicionada")
+      return
+    }
 
     const newNote: Note = {
       id: String(Date.now()),
