@@ -13,6 +13,7 @@ function App() {
     setNoteList(checker)
     if (Notification.permission !== 'granted'){
       setAllowNots(false)
+      givePerms()
     } else {
       setAllowNots(true)
     }
