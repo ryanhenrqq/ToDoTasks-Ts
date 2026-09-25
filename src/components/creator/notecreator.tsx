@@ -31,6 +31,10 @@ export function CreateTask({onChange}: NoteCreatorProps) {
     setHeaderError('')
 
     console.log(noteTitle, noteDesc, noteDate, noteTime, Date.now())
+    // DATA TREATMENT
+    const unknownChar = /[<>{}\*[\]()\/\\]/g;
+    const noteTitleC = noteTitle.replace(unknownChar, '')
+    const noteDescC = noteDesc.replace(unknownChar, '')
     if (noteTitle==""||noteDesc==""){
       console.log("Nenhuma nota adicionada")  //debug
       if (noteTitle==''&&noteDesc!=''){
@@ -50,11 +54,11 @@ export function CreateTask({onChange}: NoteCreatorProps) {
       setNoteDate(nowDate)
       return
     }
-
+    
     const newNote: Note = {
       id: String(Date.now()),
-      noteTitle,
-      noteDesc,
+      noteTitle: noteTitleC,
+      noteDesc: noteDescC,
       noteDate,
       noteTime
     }
