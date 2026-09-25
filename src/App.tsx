@@ -8,7 +8,6 @@ import { TasksView, CleanView } from './components/views/taskview'
 function App() {
   const [noteList, setNoteList] = useState<Note[]>([])
   const [allowNots, setAllowNots] = useState(false)
-  const [requestingNots, setRequestingNots] = useState(false)
   useEffect(() => {
     const checker = JSON.parse(localStorage.getItem('notes-storage') ?? '[]');
     setNoteList(checker)
@@ -18,19 +17,16 @@ function App() {
       setAllowNots(true)
     }
   }, []);
-  const updateNotes = (newNotes: Note[]) => {
-    if (!requestingNots){
-      setRequestingNots(true)
-      givePerms()
-    } else {
-      if (Notification.permission !== 'granted'){
-        setAllowNots(false)
-        setRequestingNots(true)
+  useEffect(() => {
+    if ("Notification" in window) {
+      if (Notification.permission === "granted") {
+        setAllowNots(true);
       } else {
-        setAllowNots(true)
-        setRequestingNots(false)
+        setAllowNots(false);
       }
     }
+  },[])
+  const updateNotes = (newNotes: Note[]) => {
     console.log(newNotes)  //debug
     console.log(noteList)  //debug
     setNoteList(newNotes);
