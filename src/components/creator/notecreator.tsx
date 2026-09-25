@@ -23,10 +23,31 @@ export function CreateTask({onChange}: NoteCreatorProps) {
   const [noteDesc, setNoteDesc] = useState('')
   const [noteDate, setNoteDate] = useState('')
   const [noteTime, setNoteTime] = useState('')
+  const [nowDate, setNowDate] = useState('')
+  const [dateError, setDateError] = useState('')
+  const [headerError, setHeaderError] = useState('')
   const handleCreate = () => {
+    setDateError('')
+    setHeaderError('')
+
     console.log(noteTitle, noteDesc, noteDate, noteTime, Date.now())
-    if (noteTitle==""&&noteDesc==""){
-      console.log("Nenhuma nota adicionada")
+    if (noteTitle==""||noteDesc==""){
+      console.log("Nenhuma nota adicionada")  //debug
+      if (noteTitle==''&&noteDesc!=''){
+        setHeaderError('Verifique o titulo da nota!')
+        return
+      }
+      if (noteTitle!=''&&noteDesc==''){
+        setHeaderError('Verifique a descrição da nota!')
+        return
+      }
+      setHeaderError('Verifique o titulo e a descrição!')
+      return
+    }
+    if(noteDate < nowDate || noteDate==''){
+      console.log("Data Invalida") //debug
+      setDateError('Data Invalida')
+      setNoteDate(nowDate)
       return
     }
 
@@ -44,7 +65,6 @@ export function CreateTask({onChange}: NoteCreatorProps) {
     localStorage.setItem('notes-storage', JSON.stringify(listUpdater))
     setNoteTitle('')
     setNoteDesc('')
-    setNoteDate('')
     setNoteTime('')
     onChange([...noteList, newNote])
   }
@@ -59,6 +79,7 @@ export function CreateTask({onChange}: NoteCreatorProps) {
     
     console.log(locDate)
     setNoteDate(locDate)
+    setNowDate(locDate)
   }, [timeView])
   return (
     <>
@@ -80,10 +101,16 @@ export function CreateTask({onChange}: NoteCreatorProps) {
               <p>Descrição</p>
               <textarea id="desc-set" value={noteDesc} onChange={(e) => setNoteDesc(e.target.value)}></textarea>
           </div>
+          {headerError?
+            <i style={{color:'red'}} className='center'>{headerError}</i>:null  
+          }
           <div className="list-flex-hor">
               <p>Data</p>
               <input type="date" name="date-set" id="date-set" value={noteDate} onChange={(e) => setNoteDate(e.target.value)} />
           </div>
+          {dateError?
+            <i style={{color:'red'}} className='center'>{dateError}</i>:null  
+          }
           <p><input type="checkbox" name="activate-time" id="activate-time" onChange={handleTimeView} />Horario</p>
           {timeView ? <TimeViewCreateTask value={noteTime} onChange={(e) => setNoteTime(e.target.value)} /> : null}
           <button id="button-set" className="pup-buttons" onClick={handleCreate}>Criar</button>
