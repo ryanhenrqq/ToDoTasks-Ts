@@ -49,6 +49,7 @@
     right: 50%;
     top: 23%;
     transform: translate(-50%,-50%);
+    z-index: 1;
 }
 .title-list {
     display: flex;
@@ -78,6 +79,7 @@
     border-radius: 24px;
     padding: 12px;
     width: 90%;
+    z-index: 1;
 }
 .left-side-tsk-obj {
     display: flex;

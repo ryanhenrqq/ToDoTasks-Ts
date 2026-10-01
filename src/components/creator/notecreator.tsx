@@ -91,11 +91,6 @@ export function CreateTask({onChange}: NoteCreatorProps) {
           <div className="flex-hor pup-title" id="normal-title-popup-div">
               <b>Criar nova Tarefa</b>
           </div>
-          <div className="list-flex-hor" id="save-changes-new-popup" style={{ display: 'none'}}>
-              <b>Descartar?</b>
-              <button id="save-option-yes" className="pup-buttons">Sim</button>
-              <button id="save-option-no" className="pup-buttons">Não</button>
-          </div>
           <div className="list-flex-hor">
               <p>Titulo</p>
               <input type="text" id="title-set"
