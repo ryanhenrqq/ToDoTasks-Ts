@@ -16,8 +16,11 @@ export function TasksView({note, onChangeNotes}: TaskViewProps) {
   return (
     <>
       <main className="tasker-listing">
-          <div className="today-list pad-hor">
-            <div className="title-list"><img src={hourglassIcon} alt="Ampulheta" />Proximas Tarefas</div>
+          <div className="today-list">
+            <div className="title-list">
+              <img src={hourglassIcon} alt="Ampulheta" />
+              Proximas Tarefas
+            </div>
             {note.map((note) => (
               <div key={note.id} className="task-object">
                 <TaskCard title={note.noteTitle}
