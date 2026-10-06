@@ -110,7 +110,10 @@ export function CreateTask({onChange}: NoteCreatorProps) {
           {dateError?
             <i style={{color:'red'}} className='center'>{dateError}</i>:null  
           }
-          <p><input type="checkbox" name="activate-time" id="activate-time" onChange={handleTimeView} />Horario</p>
+          <div className='time-list-set'>
+            <input type="checkbox" name="activate-time" id="activate-time" onChange={handleTimeView} />
+            <p>Horario</p>
+          </div>
           {timeView ? <TimeViewCreateTask value={noteTime} onChange={(e) => setNoteTime(e.target.value)} /> : null}
           <button id="button-set" className="pup-buttons" onClick={handleCreate}>Criar</button>
       </div>

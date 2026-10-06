@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 /* CLEAN VIEW - MAIN CONTENT */
 
 .all-done-main {
@@ -7,6 +8,8 @@
     align-items: center;
     min-height: 60vh;
     gap: 16px;
+    margin-top: 10vh;
+    font-family: "Poppins", sans-serif;
 }
 .all-done-main img {
     width: 140px;
@@ -38,6 +41,9 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+    margin-top: 10vh;
+    font-family: "Poppins", sans-serif;
+
 }
 .today-list{
     display: flex;
@@ -47,6 +53,7 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     width: 100%;
+    height: 100%;
     z-index: 1;
     overflow-x: hidden;
 }
@@ -76,12 +83,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffed9c;
+    background: #fff4bf;
+    background: linear-gradient(180deg,rgba(255, 244, 191, 1) 0%, rgba(222, 206, 142, 1) 50%, rgba(189, 177, 123, 1) 100%);
+    box-shadow: 1px 1px 10px #000;
     border-radius: 24px;
-    padding: 12px;
+    padding: 20px;
     margin-top: 4px;
     margin-bottom: 4px;
-    width: 90%;
+    width: 80%;
+    height: 5vh;
     z-index: 1;
 }
 .left-side-tsk-obj {
@@ -89,6 +99,7 @@
     flex-direction: column;
     gap: 10px;
     max-width: 80%;
+    font-family: "Pacifico", cursive;
 }
 .right-side-tsk-obj {
     display: flex;
