@@ -83,9 +83,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background: #fff4bf;
-    background: linear-gradient(180deg,rgba(255, 244, 191, 1) 0%, rgba(222, 206, 142, 1) 50%, rgba(189, 177, 123, 1) 100%);
-    box-shadow: 1px 1px 10px #000;
+    background-color: #FFF1A6;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.6);
     border-radius: 24px;
     padding: 20px;
     margin-top: 4px;
