@@ -21,7 +21,7 @@
     border: solid 1px black;
     border-radius: 24px;
     width: 20rem;
-    position: absolute;
+    position: fixed;
     padding: 2rem;
     top: 16%;
     right: 2%;

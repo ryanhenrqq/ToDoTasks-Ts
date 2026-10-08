@@ -87,7 +87,7 @@ export function CreateTask({onChange}: NoteCreatorProps) {
   }, [timeView])
   return (
     <>
-      <div className="create-pop" id="create-pop">
+      <div className="create-pop">
           <div className="flex-hor pup-title" id="normal-title-popup-div">
               <b>Criar nova Tarefa</b>
           </div>
